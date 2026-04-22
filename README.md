@@ -9,7 +9,8 @@
 
 ## 1. Architecture Diagram
 
-![Best Buy Architecture Diagram](./architecture-diagram.png)
+<img width="3209" height="1782" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/352a0de4-ad49-4110-90c0-4c547fa6df29" />
+
 
 > **Note:** The diagram above illustrates the decoupled microservices architecture. To ensure **High Availability (Task 2)**, the MongoDB layer is implemented as a **StatefulSet** with 3 replicas and Persistent Volume Claims for data durability.
 
@@ -68,3 +69,36 @@ To deploy the Best Buy stack to an Azure Kubernetes Service (AKS) cluster:
     ```bash
     kubectl get svc store-front
     ```
+---
+
+### ⚠️ Important Note on Deployment Environment
+
+Due to my **Azure Student Subscription** being suspended/disabled during the final phase of development, the live deployment on AKS was interrupted. To ensure full project completion and verification, I have taken the following steps:
+
+* **Verification:** I have fully verified the microservices architecture using **local Kubernetes (Docker Desktop)** to prove all service-to-service communication, database persistence, and message queuing are fully functional.
+* **Azure Evidence:** I have included screenshots below showing the previously active **AKS Cluster** and the **Subscription Status** to demonstrate that the cloud infrastructure was correctly provisioned and configured.
+* **Manifests:** The provided YAML files in the `Deployment-Files/` folder are production-ready and specifically configured for **Azure Kubernetes Service (AKS)** once credits are restored.
+
+---
+
+### Project Evidence & Screenshots
+
+#### 1. Proof of Work (Azure Console)
+*The screenshot below shows the AKS cluster and resource group successfully provisioned in my Azure account prior to the suspension.*
+
+<img width="1895" height="911" alt="image" src="https://github.com/user-attachments/assets/62394f13-f82f-4387-87b9-b11a81af45c5" />
+
+
+#### 2. Technical Hurdle (Subscription Status)
+*This screenshot documents the "Account Disabled" status of the student subscription that prevented the final cloud execution.*
+
+<img width="1918" height="565" alt="image" src="https://github.com/user-attachments/assets/0838e636-1fb0-4894-a742-d3f2d4ce7d77" />
+
+
+#### 3. Local Success (Functional Verification)
+*This screenshot shows the Best Buy application running successfully in a local Kubernetes environment, confirming the microservices integration.*
+
+<img width="1917" height="962" alt="image" src="https://github.com/user-attachments/assets/a202608a-30e8-4448-a8ef-e7acb7f56f6b" />
+
+
+---
