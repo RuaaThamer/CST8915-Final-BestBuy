@@ -1,0 +1,291 @@
+# -----------------------------------------------------------------------------
+# MONGO DB: High Availability & Persistence (Task 2)
+# -----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+spec:
+  clusterIP: None
+  ports:
+    - port: 27017
+  selector:
+    app: mongodb
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+spec:
+  serviceName: "mongodb"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:4.2
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+---
+# -----------------------------------------------------------------------------
+# RABBITMQ: Persistent Messaging (Task 2)
+# -----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+spec:
+  selector:
+    app: rabbitmq
+  ports:
+    - name: rabbitmq-amqp
+      port: 5672
+    - name: rabbitmq-http
+      port: 15672
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rabbitmq
+spec:
+  serviceName: "rabbitmq"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:3-management
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: "username"
+            - name: RABBITMQ_DEFAULT_PASS
+              value: "password"
+          volumeMounts:
+            - name: rabbitmq-data
+              mountPath: /var/lib/rabbitmq
+  volumeClaimTemplates:
+    - metadata:
+        name: rabbitmq-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+---
+# -----------------------------------------------------------------------------
+# MICROSERVICES (Task 1 & 2)
+# -----------------------------------------------------------------------------
+
+# --- Order Service ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service
+          image: ruaa991/bestbuy-order-service:1.0
+          env:
+            - name: ORDER_QUEUE_HOSTNAME
+              value: "rabbitmq"
+            - name: ORDER_QUEUE_PORT
+              value: "5672"
+            - name: ORDER_QUEUE_USERNAME
+              value: "username"
+            - name: ORDER_QUEUE_PASSWORD
+              value: "password"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+spec:
+  ports:
+    - port: 3000
+  selector:
+    app: order-service
+---
+# --- Product Service ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+        - name: product-service
+          image: ruaa991/product-service-bestbuy:latest
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+spec:
+  ports:
+    - port: 3002
+  selector:
+    app: product-service
+---
+# --- Makeline Service ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: makeline-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: makeline-service
+  template:
+    metadata:
+      labels:
+        app: makeline-service
+    spec:
+      containers:
+        - name: makeline-service
+          image: ruaa991/bestbuy-makeline-service:1.0
+          env:
+            - name: ORDER_QUEUE_URI
+              value: "amqp://rabbitmq:5672"
+            - name: ORDER_DB_API
+              value: "mongodb"
+            - name: ORDER_DB_URI
+              value: "mongodb://mongodb:27017"
+            - name: ORDER_DB_NAME
+              value: "orderdb"
+            - name: ORDER_DB_COLLECTION_NAME
+              value: "orders"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: makeline-service
+spec:
+  ports:
+    - port: 3001
+  selector:
+    app: makeline-service
+---
+# --- Store Front ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: store-front
+  template:
+    metadata:
+      labels:
+        app: store-front
+    spec:
+      containers:
+        - name: store-front
+          image: ruaa991/bestbuy-store-front:latest
+          imagePullPolicy: Always
+          # Inside the store-front Deployment
+          env:
+            - name: VUE_APP_ORDER_SERVICE_URL
+              value: "http://localhost:3000/"  # Use localhost for the browser's sake
+            - name: VUE_APP_PRODUCT_SERVICE_URL
+              value: "http://localhost:3002/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: store-front
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: store-front
+---
+# --- Store Admin ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: store-admin
+  template:
+    metadata:
+      labels:
+        app: store-admin
+    spec:
+      containers:
+        - name: store-admin
+          image: ruaa991/bestbuy-store-admin:1.0
+          ports:
+            - containerPort: 80
+          env:
+            # We provide every variation of the DB name the code might expect
+            - name: ORDER_DB_API
+              value: "mongodb"
+            - name: ORDER_DB_URI
+              value: "mongodb://mongodb:27017"
+            - name: ORDER_DB_NAME
+              value: "orderdb"
+            - name: ORDER_DB_COLLECTION_NAME
+              value: "orders"
+            - name: AZURE_COSMOS_RESOURCEENDPOINT
+              value: "mongodb://mongodb:27017"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: store-admin
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80      # This ensures it doesn't fight the Store Front for Port 80
+      targetPort: 3001
+  selector:
+    app: store-admin
