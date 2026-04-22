@@ -31,11 +31,11 @@ This project is a modernized, cloud-native e-commerce solution designed for **Be
 
 | Microservice | GitHub Repository Link | Docker Hub Image Link |
 | :--- | :--- | :--- |
-| **Store-Front** | [GitHub Repo](https://github.com/RuaaThamer/store-front) | [ruaa991/bestbuy-store-front:latest](https://hub.docker.com/r/ruaa991/bestbuy-store-front) |
-| **Store-Admin** | [GitHub Repo](https://github.com/RuaaThamer/store-admin) | [ruaa991/bestbuy-store-admin:1.0](https://hub.docker.com/r/ruaa991/bestbuy-store-admin) |
-| **Order-Service** | [GitHub Repo](https://github.com/RuaaThamer/order-service) | [ruaa991/bestbuy-order-service:1.0](https://hub.docker.com/r/ruaa991/bestbuy-order-service) |
-| **Product-Service** | [GitHub Repo](https://github.com/RuaaThamer/product-service-bestbuy) | [ruaa991/product-service-bestbuy:latest](https://hub.docker.com/r/ruaa991/product-service-bestbuy) |
-| **Makeline-Service** | [GitHub Repo](https://github.com/RuaaThamer/makeline-service) | [ruaa991/bestbuy-makeline-service:1.0](https://hub.docker.com/r/ruaa991/bestbuy-makeline-service) |
+| **Store-Front** | https://github.com/RuaaThamer/store-front-best-buy | [ruaa991/bestbuy-store-front:latest](https://hub.docker.com/r/ruaa991/bestbuy-store-front) |
+| **Store-Admin** | https://github.com/RuaaThamer/store-admin-best-buy | [ruaa991/bestbuy-store-admin:1.0](https://hub.docker.com/r/ruaa991/bestbuy-store-admin) |
+| **Order-Service** | https://github.com/RuaaThamer/order-service-best-buy | [ruaa991/bestbuy-order-service:1.0](https://hub.docker.com/r/ruaa991/bestbuy-order-service) |
+| **Product-Service** | https://github.com/RuaaThamer/product-service-best-buy | [ruaa991/product-service-bestbuy:latest](https://hub.docker.com/r/ruaa991/product-service-bestbuy) |
+| **Makeline-Service** | https://github.com/RuaaThamer/makeline-service-best-buy | [ruaa991/bestbuy-makeline-service:1.0](https://hub.docker.com/r/ruaa991/bestbuy-makeline-service) |
 
 ---
 
