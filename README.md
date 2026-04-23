@@ -30,16 +30,23 @@ This project is a modernized, cloud-native e-commerce solution designed for **Be
 
 ## 3. Links Table
 
-| Microservice | GitHub Repository Link | Docker Hub Image Link |
+### **Microservices Repository & Container Registry**
+
+| Service | GitHub Repository | Docker Hub Image |
 | :--- | :--- | :--- |
-| **Store-Front** | https://github.com/RuaaThamer/store-front-best-buy | [ruaa991/bestbuy-store-front:latest](https://hub.docker.com/r/ruaa991/bestbuy-store-front) |
-| **Store-Admin** | https://github.com/RuaaThamer/store-admin-best-buy | [ruaa991/bestbuy-store-admin:1.0](https://hub.docker.com/r/ruaa991/bestbuy-store-admin) |
-| **Order-Service** | https://github.com/RuaaThamer/order-service-best-buy | [ruaa991/bestbuy-order-service:1.0](https://hub.docker.com/r/ruaa991/bestbuy-order-service) |
-| **Product-Service** | https://github.com/RuaaThamer/product-service-best-buy | [ruaa991/product-service-bestbuy:latest](https://hub.docker.com/r/ruaa991/product-service-bestbuy) |
-| **Makeline-Service** | https://github.com/RuaaThamer/makeline-service-best-buy | [ruaa991/bestbuy-makeline-service:1.0](https://hub.docker.com/r/ruaa991/bestbuy-makeline-service) |
+| **Store-Front** | [RuaaThamer/store-front-best-buy](https://github.com/RuaaThamer/store-front-best-buy) | [ruaa991/bestbuy-store-front:latest](https://hub.docker.com/layers/ruaa991/bestbuy-store-front/latest/images/sha256:12c7fa5a37b5e997ddfd33cecc1940c4ad675a982002efb0346c0f0a067699a3) |
+| **Store-Admin** | [RuaaThamer/store-admin-best-buy](https://github.com/RuaaThamer/store-admin-best-buy) | [ruaa991/bestbuy-store-admin:2.0](https://hub.docker.com/layers/ruaa991/bestbuy-store-admin/2.0/images/sha256:029bde3a6d55c3625c1e3c0a5d3ae6e671aa0e261f398ae31a16dcf34ce5e5d5) |
+| **Order-Service** | [RuaaThamer/order-service-best-buy](https://github.com/RuaaThamer/order-service-best-buy) | [ruaa991/bestbuy-order-service:2.0](https://hub.docker.com/layers/ruaa991/bestbuy-order-service/2.0/images/sha256:7c72342533199e3b1004ae152c1e0ab01646569d8b5cd56badafcf93c6a55fe9) |
+| **Product-Service** | [RuaaThamer/product-service-best-buy](https://github.com/RuaaThamer/product-service-best-buy) | [ruaa991/product-service-bestbuy:latest](https://hub.docker.com/layers/ruaa991/product-service-bestbuy/latest/images/sha256:8817ccbae9031eb175281304e06aae3e2f8e125ba0d9600f5141d6dd7f4a7d1c) |
+| **Makeline-Service** | [RuaaThamer/makeline-service-best-buy](https://github.com/RuaaThamer/makeline-service-best-buy) | [ruaa991/bestbuy-makeline-service:2.0](https://hub.docker.com/layers/ruaa991/bestbuy-makeline-service/2.0/images/sha256:82369614c02cc003fecab63bf9ef2c968e2c36b7aa718a3040ef5acf646eea40) |
+
 
 ---
+#### Video link 
+https://youtu.be/mBBJwyKZ2dI
 
+
+---
 ## 4. Deployment Instructions
 
 To deploy the Best Buy stack to an Azure Kubernetes Service (AKS) cluster:
@@ -101,6 +108,3 @@ Due to my **Azure Student Subscription** being suspended/disabled during the fin
 <img width="1917" height="962" alt="image" src="https://github.com/user-attachments/assets/a202608a-30e8-4448-a8ef-e7acb7f56f6b" />
 
 
----
-#### Video link 
-https://youtu.be/mBBJwyKZ2dI
