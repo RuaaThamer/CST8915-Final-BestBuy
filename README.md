@@ -102,3 +102,5 @@ Due to my **Azure Student Subscription** being suspended/disabled during the fin
 
 
 ---
+#### Video link 
+https://youtu.be/mBBJwyKZ2dI
